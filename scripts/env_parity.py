@@ -8,6 +8,7 @@ Detects version mismatches, package conflicts, and Colab-specific pitfalls.
 Usage:
     python env_parity.py notebook.ipynb [--snapshot-file platforms/colab.json] [--json-output]
 """
+from __future__ import annotations
 
 import argparse
 import json
@@ -47,7 +48,7 @@ COLAB_SNAPSHOT = {
     "gpu_options": [
         {"name": "Tesla T4", "vram_gb": 15, "cuda_capability": "7.5", "tier": "free"},
         {"name": "L4", "vram_gb": 24, "cuda_capability": "8.9", "tier": "pro"},
-        {"name": "A100", "vram_gb": 80, "cuda_capability": "8.0", "tier": "pro+"},
+        {"name": "A100", "vram_gb": 40, "cuda_capability": "8.0", "tier": "pro+"},
     ],
 }
 

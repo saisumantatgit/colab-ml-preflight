@@ -7,14 +7,14 @@
   "gpu_options": [
     {"name": "Tesla T4", "vram_gb": 15, "cuda_capability": "7.5", "tier": "free"},
     {"name": "L4", "vram_gb": 24, "cuda_capability": "8.9", "tier": "pro"},
-    {"name": "A100", "vram_gb": 80, "cuda_capability": "8.0", "tier": "pro+"}
+    {"name": "A100", "vram_gb": 40, "cuda_capability": "8.0", "tier": "pro+", "note": "80GB occasionally available"}
   ],
   "timeout_hours": {"free": 12, "pro": 12, "pro+": 24},
   "idle_timeout_minutes": {"free": 90, "pro": 90, "pro+": null},
   "working_directory": "/content/",
   "drive_mount_point": "/content/drive/MyDrive/",
   "output_persistence": "Google Drive only — /content/ wiped on disconnect",
-  "pre_installed_packages": [
+  "pre_installed": [
     "torch", "torchvision", "torchaudio", "numpy", "pandas",
     "scikit-learn", "scipy", "matplotlib", "seaborn", "pillow"
   ],
@@ -29,7 +29,15 @@
     "monthly_included": 100,
     "additional_cost_per_cu": 0.10
   },
-  "known_conflicts": [],
+  "known_conflicts": [
+    {
+      "pattern": "bitsandbytes",
+      "condition": "python>=3.12",
+      "description": "bitsandbytes may import triton.ops which fails on Colab (Python 3.12)",
+      "fix": "Remove bitsandbytes for <=7B inference-only models",
+      "governance": "S16.1.1"
+    }
+  ],
   "push_method": "Upload .ipynb to Google Drive or open from GitHub URL",
   "tier_pricing": {
     "free": "$0",

@@ -8,7 +8,7 @@ Reference for Google Colab GPU tiers, capabilities, and model fitting guidelines
 |------|-----|----------|------|-------|----------|
 | **Free** | Tesla T4 | 7.5 | 15 GB | $0 | <=7B inference, <=3B fine-tuning |
 | **Pro** | L4 | 8.9 | 24 GB | $9.99/mo | <=7B fine-tuning, <=13B inference (INT4) |
-| **Pro+** | A100 | 8.0 | 40/80 GB | $49.99/mo | <=13B fine-tuning, <=70B inference (INT4) |
+| **Pro+** | A100 | 8.0 | 40 GB (80 GB on select instances) | $49.99/mo | <=13B fine-tuning, <=70B inference (INT4) |
 
 ## Compute Unit Costs
 
@@ -31,7 +31,7 @@ Reference for Google Colab GPU tiers, capabilities, and model fitting guidelines
 
 ## What Fits Where (Model Sizing)
 
-| Model Size | FP16 VRAM | INT4 VRAM | T4 (15GB) | L4 (24GB) | A100 (80GB) |
+| Model Size | FP16 VRAM | INT4 VRAM | T4 (15GB) | L4 (24GB) | A100 (40GB) |
 |------------|-----------|-----------|-----------|-----------|-------------|
 | 1B | 2 GB | 0.5 GB | Inference + Training | Inference + Training | Inference + Training |
 | 3B | 6 GB | 1.5 GB | Inference + Training (tight) | Inference + Training | Inference + Training |

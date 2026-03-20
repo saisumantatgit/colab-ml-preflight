@@ -14,6 +14,7 @@ Usage (import in Colab notebook):
 Usage (standalone for local testing):
     python poll_monitor.py --check-health
 """
+from __future__ import annotations
 
 import argparse
 import json

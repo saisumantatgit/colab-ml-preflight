@@ -10,6 +10,7 @@ Usage:
 
 Every check traces to a governance section (S-number) or post-incident review.
 """
+from __future__ import annotations
 
 import argparse
 import ast
@@ -348,7 +349,7 @@ def check_colab_specific(cells: list[dict], findings: list[Finding]) -> None:
     # Check for gated models without Colab Secrets
     gated_patterns = ["meta-llama/", "google/gemma", "mistralai/"]
     has_gated = any(p in all_source for p in gated_patterns)
-    has_secrets = "userdata.get" in all_source or "userdata.get" in all_source
+    has_secrets = "userdata.get" in all_source
     has_hf_login = "huggingface_hub.login" in all_source or "HF_TOKEN" in all_source
     if has_gated and not has_secrets and not has_hf_login:
         findings.append(Finding(
@@ -372,7 +373,12 @@ def run_preflight(path: str, strict: bool = False) -> dict:
         except json.JSONDecodeError:
             return {
                 "file": path,
+                "platform": "colab",
                 "valid": False,
+                "passed": False,
+                "blockers": 1,
+                "warnings": 0,
+                "infos": 0,
                 "error": "Not a valid .ipynb file (invalid JSON)",
                 "findings": [],
             }
@@ -381,7 +387,12 @@ def run_preflight(path: str, strict: bool = False) -> dict:
     else:
         return {
             "file": path,
+            "platform": "colab",
             "valid": False,
+            "passed": False,
+            "blockers": 1,
+            "warnings": 0,
+            "infos": 0,
             "error": "Unsupported file type (expected .ipynb or .py)",
             "findings": [],
         }

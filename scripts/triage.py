@@ -8,6 +8,7 @@ and looks up known fixes from case studies and post-incident reviews.
 Usage:
     python triage.py --error-log <file> [--known-fixes known_fixes.yaml] [--json-output]
 """
+from __future__ import annotations
 
 import argparse
 import json
@@ -174,7 +175,7 @@ ERROR_PATTERNS = [
         "category": "RESOURCE.OOM",
         "case_study": None,
         "governance": "S11",
-        "cause": "Model + batch size exceeds Colab GPU VRAM (T4=15GB, L4=24GB, A100=80GB)",
+        "cause": "Model + batch size exceeds Colab GPU VRAM (T4=15GB, L4=24GB, A100=40GB)",
         "fix": "Reduce batch_size, enable gradient_checkpointing, use mixed precision or quantization. Consider upgrading Colab tier for more VRAM.",
         "confidence": "HIGH",
     },

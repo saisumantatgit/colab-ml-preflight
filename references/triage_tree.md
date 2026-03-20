@@ -37,7 +37,7 @@ START: Your Colab notebook failed.
 +-- "CUDA out of memory"
 |   --> RESOURCE.OOM (S11)
 |   FIX: Reduce batch_size, gradient_checkpointing=True
-|   FIX: T4 has 15GB — try L4 (24GB) or A100 (80GB)
+|   FIX: T4 has 15GB — try L4 (24GB) or A100 (40GB)
 |   See: references/gpu_matrix.md for model sizing
 |
 +-- "ModuleNotFoundError" or "ImportError"
