@@ -1,0 +1,124 @@
+# colab-ml-preflight Known Fixes Database
+# Map error patterns to known fixes on Google Colab.
+# Used by: scripts/triage.py
+# Format: Each fix has an id, regex pattern, category, fix description, and governance reference.
+
+fixes:
+  # Colab-specific fixes (prominent)
+  - id: FIX-C01
+    pattern: "session crashed.*high RAM|Your session crashed"
+    category: COLAB.RAM_CRASH
+    cause: "Colab session crashed due to RAM exhaustion"
+    fix: "Reduce batch_size, use 8-bit/4-bit quantization (bitsandbytes or GPTQ), del unused models + torch.cuda.empty_cache(). Upgrade to Pro+ for more RAM."
+    confidence: HIGH
+
+  - id: FIX-C02
+    pattern: "session.*disconnected|Runtime disconnected|no longer connected"
+    category: COLAB.DISCONNECT
+    cause: "Colab runtime disconnected — idle timeout, session timeout, or GPU preemption"
+    fix: "Save checkpoints to Drive every 500 steps. Use checkpoint-and-resume pattern. Upgrade to Pro+ for guaranteed GPU and no idle timeout."
+    confidence: HIGH
+
+  - id: FIX-C03
+    pattern: "Drive already mounted|drive.*mount.*fail|FileNotFoundError.*/content/drive"
+    category: COLAB.DRIVE
+    cause: "Google Drive mount issue on Colab"
+    fix: "Guard: if not os.path.exists('/content/drive/MyDrive'): drive.mount('/content/drive'). Re-mount after reconnecting."
+    confidence: HIGH
+
+  # Standard fixes
+  - id: FIX-001
+    pattern: "ModuleNotFoundError.*triton\\.ops"
+    category: ENV.TRITON
+    case_study: cs06_gpu_triton
+    governance: "S13, S16.1.1"
+    cause: "bitsandbytes imports triton.ops which does not exist on Colab's Python 3.12"
+    fix: "Remove bitsandbytes for <=7B inference-only models. Use float16 directly."
+    confidence: HIGH
+
+  - id: FIX-002
+    pattern: "AttributeError.*total_mem[^o]"
+    category: API.ATTR
+    case_study: cs09_five_failure_gauntlet
+    governance: "S16.1.2"
+    cause: "torch uses .total_memory, not .total_mem"
+    fix: "Change .total_mem to .total_memory"
+    confidence: HIGH
+
+  - id: FIX-003
+    pattern: "401.*Unauthorized.*[Hh]ugging|gated.*repo"
+    category: AUTH.GATED
+    case_study: cs09_five_failure_gauntlet
+    governance: "S16.1.3"
+    cause: "Gated model requires HuggingFace authentication"
+    fix: "Set HF_TOKEN in Colab Secrets (sidebar > key icon). Or use ungated community mirrors."
+    confidence: HIGH
+
+  - id: FIX-004
+    pattern: "JSONDecodeError|Extra data"
+    category: DATA.JSON
+    case_study: cs09_five_failure_gauntlet
+    governance: "S16.1.4"
+    cause: "JSON artifact is corrupted or contains non-JSON content"
+    fix: "Validate JSON before use: python -c \"import json; json.load(open('file.json'))\""
+    confidence: HIGH
+
+  - id: FIX-005
+    pattern: "use_fast.*TypeError|TypeError.*bool.*callable"
+    category: ENV.TOKENIZER
+    case_study: cs09_five_failure_gauntlet
+    governance: "S16.1.5"
+    cause: "use_fast=False causes TypeError on Colab's Python 3.12 + current transformers"
+    fix: "Remove use_fast=False or test tokenizer loading locally before pushing"
+    confidence: HIGH
+
+  - id: FIX-006
+    pattern: "OutOfMemoryError|CUDA out of memory"
+    category: RESOURCE.OOM
+    governance: "S11"
+    cause: "Model + batch size exceeds Colab GPU VRAM (T4=15GB, L4=24GB, A100=80GB)"
+    fix: "Reduce batch_size, gradient_checkpointing=True, mixed precision. Upgrade Colab tier for more VRAM."
+    confidence: HIGH
+
+  - id: FIX-007
+    pattern: "GPUTooOldForTriton"
+    category: RESOURCE.GPU_OLD
+    case_study: cs06_gpu_triton
+    governance: "S13"
+    cause: "GPU CUDA capability below 7.0 — rare on Colab (T4 is 7.5)"
+    fix: "Disable torch.compile: TORCH_COMPILE_DISABLE=1, torch_compile=False"
+    confidence: HIGH
+
+  - id: FIX-008
+    pattern: "ImportError.*after.*install|ModuleNotFoundError"
+    category: ENV.CELL_CACHE
+    case_study: cs07_import_trap
+    governance: "S14, S12"
+    cause: "Package imported in same cell as pip install — Jupyter cache not refreshed"
+    fix: "Separate install and import cells. Restart runtime after install, then run from import cell."
+    confidence: MEDIUM
+
+  - id: FIX-009
+    pattern: "SyntaxError.*f-string|SyntaxError.*unterminated"
+    category: LOGIC.ESCAPING
+    case_study: cs04_string_escaping
+    governance: "S9"
+    cause: "String escaping collision in notebook cell generation"
+    fix: "Use sovereign script pattern: %%writefile script.py + !python script.py"
+    confidence: MEDIUM
+
+  - id: FIX-010
+    pattern: "importlib.*metadata|PackageNotFoundError"
+    category: ENV.METADATA
+    governance: "S2.A"
+    cause: "Corrupted package metadata in Colab's Python 3.12 environment"
+    fix: "Run cleanse: pip install -U importlib-metadata, restart runtime, then install other packages"
+    confidence: MEDIUM
+
+# Add your project-specific fixes below:
+# - id: FIX-100
+#   pattern: "your_error_pattern"
+#   category: ENV.CUSTOM
+#   cause: "description"
+#   fix: "how to fix"
+#   confidence: HIGH

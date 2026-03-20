@@ -1,0 +1,39 @@
+{
+  "platform": "colab",
+  "last_verified": "2026-03-20",
+  "python_version": "3.12",
+  "torch_version": "2.8.0",
+  "cuda_version": "12.6",
+  "gpu_options": [
+    {"name": "Tesla T4", "vram_gb": 15, "cuda_capability": "7.5", "tier": "free"},
+    {"name": "L4", "vram_gb": 24, "cuda_capability": "8.9", "tier": "pro"},
+    {"name": "A100", "vram_gb": 80, "cuda_capability": "8.0", "tier": "pro+"}
+  ],
+  "timeout_hours": {"free": 12, "pro": 12, "pro+": 24},
+  "idle_timeout_minutes": {"free": 90, "pro": 90, "pro+": null},
+  "working_directory": "/content/",
+  "drive_mount_point": "/content/drive/MyDrive/",
+  "output_persistence": "Google Drive only — /content/ wiped on disconnect",
+  "pre_installed_packages": [
+    "torch", "torchvision", "torchaudio", "numpy", "pandas",
+    "scikit-learn", "scipy", "matplotlib", "seaborn", "pillow"
+  ],
+  "not_pre_installed": ["transformers", "peft", "accelerate", "bitsandbytes"],
+  "auth": {
+    "hf_token": true,
+    "note": "Manual huggingface_hub.login() or Colab Secrets (userdata.get) each session"
+  },
+  "compute_units": {
+    "t4_per_hour": 1.76,
+    "a100_per_hour": 15,
+    "monthly_included": 100,
+    "additional_cost_per_cu": 0.10
+  },
+  "known_conflicts": [],
+  "push_method": "Upload .ipynb to Google Drive or open from GitHub URL",
+  "tier_pricing": {
+    "free": "$0",
+    "pro": "$9.99/month",
+    "pro+": "$49.99/month"
+  }
+}

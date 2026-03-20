@@ -1,0 +1,35 @@
+{
+  "name": "colab-ml-preflight",
+  "version": "1.0.0",
+  "description": "Stop losing training runs to Colab disconnects and silent failures.",
+  "author": "Sai Sumanth Battepati",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saisumantatgit/colab-ml-preflight"
+  },
+  "keywords": [
+    "colab",
+    "google-colab",
+    "colab-pro",
+    "preflight",
+    "notebook-validation",
+    "mlops",
+    "gpu-management",
+    "ml-governance"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    ".claude-plugin/",
+    ".claude/",
+    "scripts/",
+    "references/",
+    "case_studies/",
+    "platforms/",
+    "templates/",
+    "prompts/",
+    "adapters/"
+  ]
+}

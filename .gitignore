@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials (NEVER commit)
+*.env
+.env.*
+credentials.json
+*.pem
+*.key
+
+# Test outputs
+results/
+output/
+*.log
+
+# Node
+node_modules/
+
+# Colab-specific
+.ipynb_checkpoints/
+sample_data/

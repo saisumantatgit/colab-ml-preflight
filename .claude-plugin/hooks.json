@@ -1,0 +1,23 @@
+{
+  "hooks": [
+    {
+      "event": "session_start",
+      "action": "announce",
+      "message": "\u2708\ufe0f colab-ml-preflight loaded. /build, /check, /launch, /monitor, /blackbox, /handbook"
+    },
+    {
+      "event": "before_command",
+      "pattern": "drive\\.mount|from google\\.colab import drive",
+      "action": "invoke_skill",
+      "skill": "check",
+      "message": "Preflight check triggered before Colab Drive mount..."
+    },
+    {
+      "event": "before_command",
+      "pattern": "Runtime.*restart|runtime.*reconnect",
+      "action": "invoke_skill",
+      "skill": "check",
+      "message": "Preflight check triggered before Colab runtime restart..."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "colab-ml-preflight",
+  "version": "1.0.0",
+  "description": "Preflight checks, monitoring, and triage for ML notebook runs on Google Colab.",
+  "tagline": "Stop losing training runs to Colab disconnects and silent failures.",
+  "author": "Sai Sumanth Battepati",
+  "license": "MIT",
+  "repository": "https://github.com/saisumantatgit/colab-ml-preflight",
+  "skills": [
+    {
+      "name": "build",
+      "path": ".claude/skills/build/SKILL.md",
+      "trigger": "Constructing or authoring an ML notebook for Google Colab execution"
+    },
+    {
+      "name": "check",
+      "path": ".claude/skills/check/SKILL.md",
+      "trigger": "Before running a notebook on Google Colab"
+    },
+    {
+      "name": "launch",
+      "path": ".claude/skills/launch/SKILL.md",
+      "trigger": "Deploying a notebook to Google Colab via Drive or GitHub"
+    },
+    {
+      "name": "monitor",
+      "path": ".claude/skills/monitor/SKILL.md",
+      "trigger": "After starting a Colab notebook, while it is executing"
+    },
+    {
+      "name": "blackbox",
+      "path": ".claude/skills/blackbox/SKILL.md",
+      "trigger": "After a Colab notebook failure — runtime crash, disconnect, or error"
+    },
+    {
+      "name": "handbook",
+      "path": ".claude/skills/handbook/SKILL.md",
+      "trigger": "On-demand reference for Colab rules, case studies, and glossary"
+    }
+  ],
+  "commands": [
+    "/build",
+    "/check",
+    "/launch",
+    "/monitor",
+    "/blackbox",
+    "/handbook"
+  ],
+  "scripts": [
+    "scripts/preflight_check.py",
+    "scripts/env_parity.py",
+    "scripts/poll_monitor.py",
+    "scripts/triage.py"
+  ],
+  "platforms": ["colab"]
+}

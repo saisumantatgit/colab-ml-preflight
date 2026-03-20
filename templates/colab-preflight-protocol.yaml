@@ -1,0 +1,56 @@
+# colab-ml-preflight Configuration
+# Place in your project root or specify via --config flag.
+# Pre-configured for Google Colab — no platform selection needed.
+
+# Target platform (always Colab)
+platform: colab
+
+# Colab tier (affects timeout, GPU, and quota expectations)
+colab_tier: free  # free | pro | pro+
+
+# GPU requirements (auto-detected from Colab runtime)
+gpu:
+  target: T4                    # T4 (free), L4 (pro), A100 (pro+)
+  min_cuda_capability: 7.0      # All Colab GPUs meet this
+  min_vram_gb: 15               # T4 minimum
+  allow_degradation: true       # Allow graceful degradation
+
+# Google Drive persistence
+drive:
+  auto_mount: true              # Mount Drive at notebook start
+  output_dir: /content/drive/MyDrive/ml-outputs/
+  checkpoint_dir: /content/drive/MyDrive/checkpoints/
+  checkpoint_interval: 500      # Save checkpoint every N steps
+
+# Notebook construction defaults
+build:
+  deterministic: true           # Enforce temperature=0, do_sample=False
+  sovereign_script: true        # Enforce %%writefile pattern
+  cell_separation: true         # Enforce install/import separation
+  flush_logging: true           # Enforce flush=True on all prints
+  seed_value: 42                # Default seed for reproducibility
+
+# Preflight strictness
+check:
+  strict: false                 # Treat warnings as blockers
+  skip_checks: []               # List of check codes to skip
+  extra_json_artifacts: []      # Additional JSON files to validate
+  custom_import_allowlist: []   # Imports that don't need pip install (stdlib)
+
+# Monitoring (in-notebook, no external API)
+monitor:
+  heartbeat_interval: 10        # Emit heartbeat every N items in eval loops
+  gpu_monitor_interval: 300     # GPU status check every N seconds
+  ram_warning_threshold: 90     # RAM % threshold for crash warning
+  on_complete: drive            # Save outputs to Drive on completion
+
+# Triage
+triage:
+  custom_fixes: null            # Path to additional known-fixes YAML
+  auto_triage_on_error: true    # Automatically classify errors
+
+# Colab session management
+session:
+  warn_before_timeout: true     # Warn when approaching session timeout
+  timeout_warning_minutes: 30   # Warn N minutes before timeout
+  auto_checkpoint: true         # Auto-checkpoint before estimated timeout

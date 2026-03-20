@@ -1,0 +1,18 @@
+# colab-ml-preflight configuration for Aider
+# Pre-configured for Google Colab
+
+read:
+  - prompts/build.md
+  - prompts/check.md
+  - prompts/launch.md
+  - prompts/monitor.md
+  - prompts/blackbox.md
+  - prompts/handbook.md
+  - references/cheatsheet.md
+  - references/gpu_matrix.md
+
+# For full reference:
+#   - references/error_taxonomy.md
+#   - references/triage_tree.md
+#   - references/glossary.md
+#   - case_studies/ directory
